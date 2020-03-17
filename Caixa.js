@@ -6,6 +6,7 @@ class Caixa {
     const organizedItems = this.Organize(items);
     console.log('Itens reorganizados:');
     console.table(organizedItems);
+    console.log(this.findMaxVol(items));
 
   }
 
@@ -38,6 +39,25 @@ class Caixa {
     });
 
     return outPutItems;
+  }
+
+  // Encontra o item de maior volume para iniciar alocação dos demais itens
+  // Retorna o idex do item de maior volume
+  findMaxVol(items){
+    let outPut, vol;
+    let maxVol = 0;
+
+    items.forEach(item => {
+      vol = item.altura * item.comprimento * item.largura;
+      if (vol > maxVol){
+        maxVol = vol;
+        outPut = item;
+
+      };
+
+    })
+
+    return outPut;
   }
 
 }
