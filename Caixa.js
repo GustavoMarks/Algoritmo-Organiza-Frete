@@ -12,11 +12,18 @@ class Caixa {
 
     // Encontrando o item de maior volume (servirá como referência para dimensões do fundo da caixa)
     const maxVol = this.findMaxVol(items);
+    console.log('Item de maior volume:');
+    console.log(maxVol);
     boxDim.altura = maxVol.altura;
     boxDim.comprimento = maxVol.comprimento;
     boxDim.largura = maxVol.largura;
 
+    // Descontando item unitátio de maior
+    this.discount(organizedItems, maxVol);
 
+    console.table(organizedItems);
+    this.discount(organizedItems, maxVol);
+    console.table(organizedItems);
 
   }
 
@@ -43,7 +50,13 @@ class Caixa {
       else if(item.largura == maior || item.largura == menor) inter = item.largura;
       else if(item.comprimento == maior || item.comprimento == menor) inter = item.comprimento;
     
-      const newItem = { titulo: item.titulo, altura: menor, largura: inter, comprimento: maior, quantidade: item.quantidade};
+      const newItem = { id: item.id,
+        titulo: item.titulo,
+        altura: menor,
+        largura: inter,
+        comprimento: maior,
+        quantidade: item.quantidade
+      };
       outPutItems.push(newItem);
 
     });
@@ -72,7 +85,13 @@ class Caixa {
 
   // Remover uma unidade da lista de itens
   discount(itemsList, item){
-    
+    const index = itemsList.findIndex((element) => {
+      return element.id === item.id;
+    });
+
+    if(itemsList[index].quantidade > 1) itemsList[index].quantidade =  itemsList[index].quantidade - 1;
+    else itemsList.splice(index, 1);
+
   }
 
 }
