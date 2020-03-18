@@ -70,6 +70,11 @@ class Caixa {
     return outPut;
   }
 
+  // Remover uma unidade da lista de itens
+  discount(itemsList, item){
+    
+  }
+
 }
 
 module.exports = Caixa;
