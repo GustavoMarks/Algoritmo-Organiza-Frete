@@ -3,10 +3,20 @@ class Caixa {
   // Devolve valores da caixa, caso limite não sejam ultrapassados
   // Devolve valor false, caso limite seja ultrapassado
   getDimensions(items){
+    // Dados sobre a dimensão da caixa de frete que serão retornados na saída.
+    let boxDim = {altura: 0, comprimento: 0, largura: 0};
+    // Ajustando dimensões para melhor ajuste na caixa
     const organizedItems = this.Organize(items);
     console.log('Itens reorganizados:');
     console.table(organizedItems);
-    console.log(this.findMaxVol(items));
+
+    // Encontrando o item de maior volume (servirá como referência para dimensões do fundo da caixa)
+    const maxVol = this.findMaxVol(items);
+    boxDim.altura = maxVol.altura;
+    boxDim.comprimento = maxVol.comprimento;
+    boxDim.largura = maxVol.largura;
+
+
 
   }
 
@@ -33,7 +43,7 @@ class Caixa {
       else if(item.largura == maior || item.largura == menor) inter = item.largura;
       else if(item.comprimento == maior || item.comprimento == menor) inter = item.comprimento;
     
-      const newItem = { titulo: item.titulo, altura: menor, largura: inter, comprimento: maior};
+      const newItem = { titulo: item.titulo, altura: menor, largura: inter, comprimento: maior, quantidade: item.quantidade};
       outPutItems.push(newItem);
 
     });
