@@ -7,13 +7,9 @@ class Caixa {
     let boxDim = {altura: 0, comprimento: 0, largura: 0};
     // Ajustando dimensões para melhor ajuste na caixa
     const organizedItems = this.Organize(items);
-    console.log('Itens reorganizados:');
-    console.table(organizedItems);
 
     // Encontrando o item de maior volume (servirá como referência para dimensões do fundo da caixa)
     let maxVol = this.findMaxVol(organizedItems);
-    console.log('Item de maior volume:');
-    console.log(maxVol);
     boxDim.altura = maxVol.altura;
     boxDim.comprimento = maxVol.comprimento;
     boxDim.largura = maxVol.largura;
@@ -26,17 +22,11 @@ class Caixa {
 
     // Espaço disponível na pilha de itens
     let freeTopW = boxDim.largura;
-    let count = 0;
 
     // Encaixotando itens restantes
     while(organizedItems.length > 0){
-      console.log(count);
-      console.log(freeTopW);
-      console.log(boxDim);
-      console.table(organizedItems);
       // Buscando novo item de maior volume
       maxVol = this.findMaxVol(organizedItems);
-      console.log(maxVol);
 
       // Caso não haja nenhum item no topo
       if(freeTopW === boxDim.largura){
@@ -44,42 +34,58 @@ class Caixa {
         if(maxVol.largura <= freeTopW){
           freeTopW -= maxVol.largura;
 
+          // Caso item extrapole comprimento
           if(maxVol.comprimento > boxDim.comprimento)
             boxDim.comprimento = maxVol.comprimento;
 
+          // Salvando último item e descontando da lista
           lastItem = maxVol;
           this.discount(organizedItems, maxVol);
 
-        } else {
-          // Largura do item cabe
-          if(maxVol.largura <= freeTopW){
-            freeTopW -= maxVol.largura;
+        }
+        // Lagura do item não cabe 
+        else {
+          boxDim.largura = maxVol.largura;
 
-            if(maxVol.comprimento > boxDim.comprimento)
-              boxDim.comprimento = maxVol.comprimento;
+          // Caso item extrapole comprimento
+          if(maxVol.comprimento > boxDim.comprimento)
+            boxDim.comprimento = maxVol.comprimento;
 
-            if(maxVol.altura > lastItem.altura)
-              lastItem = maxVol;
-
-            this.discount(organizedItems, maxVol);
-            
-          } else {
-            boxDim.altura += lastItem.altura;
-            freeTopW = boxDim.largura;
-
-          }
+          // Salvando último item e descontando da lista
+          lastItem = maxVol;
+          this.discount(organizedItems, maxVol);
 
         }
+
       }
+      // Caso já exista itens no topo 
+      else {
+        // Largura do item cabe
+        if(maxVol.largura <= freeTopW){
+          freeTopW -= maxVol.largura;
 
-      count++;
+          // Caso item extrapole comprimento
+          if(maxVol.comprimento > boxDim.comprimento)
+          boxDim.comprimento = maxVol.comprimento;
 
+          // Item será considerado como último se sua altura for a maior do topo
+          if(maxVol.altura > lastItem.altura)
+            lastItem = maxVol;
+
+          this.discount(organizedItems, maxVol);
+            
+        }
+        // Caso a largura do item não caiba, um novo nível é formado
+        else {
+          boxDim.altura += lastItem.altura;
+          freeTopW = boxDim.largura;
+        }
+
+      }
     }
-
-    console.log('saiu do loop');
+    
     boxDim.altura += lastItem.altura;
     return boxDim;
-
 
   }
 
@@ -106,7 +112,8 @@ class Caixa {
       else if(item.largura == maior || item.largura == menor) inter = item.largura;
       else if(item.comprimento == maior || item.comprimento == menor) inter = item.comprimento;
     
-      const newItem = { id: item.id,
+      const newItem = {
+        id: item.id,
         titulo: item.titulo,
         altura: menor,
         largura: inter,

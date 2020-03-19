@@ -1,5 +1,6 @@
 const Caixa = require('./Caixa');
 
+console.log('ITEMS:')
 const itens = [
   {
     id: 1,
@@ -49,4 +50,5 @@ const itens = [
 console.table(itens);
 
 let caixa = new Caixa;
-console.log(caixa.getDimensions(itens));
+console.log('PROPRIEDADES DA CAIXA:')
+console.table(caixa.getDimensions(itens));
