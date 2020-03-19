@@ -172,6 +172,24 @@ class Caixa {
 
   }
 
+  // Testa se lista de itens formam uma caixa com certos limites
+  test(itemsList){
+    const alturaMax = 105;
+    const compMax = 105;
+    const larguraMax = 105;
+    const somaMax = 200;
+    const pesoMax = 30000;
+
+    const boxDim = this.getDimensions(itemsList);
+    if(boxDim.altura > alturaMax || boxDim.comprimento > compMax
+      || boxDim.largura > larguraMax || boxDim.peso > pesoMax
+      || somaMax < boxDim.altura + boxDim.comprimento + boxDim.largura)
+      return false;
+    
+    return true;
+
+  }
+
 }
 
 module.exports = Caixa;

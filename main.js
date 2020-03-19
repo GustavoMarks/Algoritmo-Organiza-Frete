@@ -56,5 +56,6 @@ const itens = [
 console.table(itens);
 
 let caixa = new Caixa;
-console.log('PROPRIEDADES DA CAIXA:')
+console.log('PROPRIEDADES DA CAIXA:');
 console.table(caixa.getDimensions(itens));
+console.table(caixa.test(itens));
