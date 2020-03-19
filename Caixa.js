@@ -11,19 +11,75 @@ class Caixa {
     console.table(organizedItems);
 
     // Encontrando o item de maior volume (servirá como referência para dimensões do fundo da caixa)
-    const maxVol = this.findMaxVol(items);
+    let maxVol = this.findMaxVol(organizedItems);
     console.log('Item de maior volume:');
     console.log(maxVol);
     boxDim.altura = maxVol.altura;
     boxDim.comprimento = maxVol.comprimento;
     boxDim.largura = maxVol.largura;
 
-    // Descontando item unitátio de maior
+    // Descontando item unitário de maior volume
     this.discount(organizedItems, maxVol);
 
-    console.table(organizedItems);
-    this.discount(organizedItems, maxVol);
-    console.table(organizedItems);
+    // Guardando informação de último item encaixotado
+    let lastItem = maxVol;
+
+    // Espaço disponível na pilha de itens
+    let freeTopW = boxDim.largura;
+    let count = 0;
+
+    // Encaixotando itens restantes
+    while(organizedItems.length > 0){
+      console.log(count);
+      console.log(freeTopW);
+      console.log(boxDim);
+      console.table(organizedItems);
+      // Buscando novo item de maior volume
+      maxVol = this.findMaxVol(organizedItems);
+      console.log(maxVol);
+
+      // Caso não haja nenhum item no topo
+      if(freeTopW === boxDim.largura){
+        // Largura do item cabe
+        if(maxVol.largura <= freeTopW){
+          freeTopW -= maxVol.largura;
+
+          if(maxVol.comprimento > boxDim.comprimento)
+            boxDim.comprimento = maxVol.comprimento;
+
+          lastItem = maxVol;
+          this.discount(organizedItems, maxVol);
+
+        } else {
+          // Largura do item cabe
+          if(maxVol.largura <= freeTopW){
+            freeTopW -= maxVol.largura;
+
+            if(maxVol.comprimento > boxDim.comprimento)
+              boxDim.comprimento = maxVol.comprimento;
+
+            if(maxVol.altura > lastItem.altura)
+              lastItem = maxVol;
+
+            this.discount(organizedItems, maxVol);
+            
+          } else {
+            boxDim.altura += lastItem.altura;
+            freeTopW = boxDim.largura;
+
+          }
+
+        }
+      }
+
+      count++;
+
+    }
+
+    console.log('saiu do loop');
+    boxDim.altura += lastItem.altura;
+    return boxDim;
+
 
   }
 

@@ -49,4 +49,4 @@ const itens = [
 console.table(itens);
 
 let caixa = new Caixa;
-caixa.getDimensions(itens);
+console.log(caixa.getDimensions(itens));
