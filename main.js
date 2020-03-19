@@ -8,7 +8,8 @@ const itens = [
     altura: 7,
     comprimento: 8,
     largura: 9,
-    quantidade: 1
+    quantidade: 1,
+    peso: 4
   },{
     id: 2,
     titulo: 'item 2',
@@ -16,6 +17,7 @@ const itens = [
     comprimento: 18,
     largura: 13,
     quantidade: 2,
+    peso: 5
   },{
     id: 3,
     titulo: 'item 3',
@@ -23,6 +25,7 @@ const itens = [
     comprimento: 15,
     largura: 16,
     quantidade: 3,
+    peso: 4,
   },{
     id: 4,
     titulo: 'item 4',
@@ -30,6 +33,7 @@ const itens = [
     comprimento: 15,
     largura: 14,
     quantidade: 1,
+    peso: 4,
   },{
     id: 5,
     titulo: 'item 5',
@@ -37,6 +41,7 @@ const itens = [
     comprimento: 16,
     largura: 16,
     quantidade: 2,
+    peso: 5
   },{
     id: 6,
     titulo: 'item 5',
@@ -44,6 +49,7 @@ const itens = [
     comprimento: 16,
     largura: 16,
     quantidade: 1,
+    peso: 9,
   },
 ];
 

@@ -23,6 +23,10 @@ class Caixa {
     // Espaço disponível na pilha de itens
     let freeTopW = boxDim.largura;
 
+    // Acumulador de peso e volume
+    boxDim.peso = 0;
+    boxDim.volItems = 0;
+
     // Encaixotando itens restantes
     while(organizedItems.length > 0){
       // Buscando novo item de maior volume
@@ -40,6 +44,8 @@ class Caixa {
 
           // Salvando último item e descontando da lista
           lastItem = maxVol;
+          boxDim.peso += maxVol.peso;
+          boxDim.volItems += maxVol.comprimento * maxVol.altura * maxVol.largura;
           this.discount(organizedItems, maxVol);
 
         }
@@ -53,6 +59,8 @@ class Caixa {
 
           // Salvando último item e descontando da lista
           lastItem = maxVol;
+          boxDim.peso += maxVol.peso;
+          boxDim.volItems += maxVol.comprimento * maxVol.altura * maxVol.largura;
           this.discount(organizedItems, maxVol);
 
         }
@@ -72,6 +80,8 @@ class Caixa {
           if(maxVol.altura > lastItem.altura)
             lastItem = maxVol;
 
+          boxDim.peso += maxVol.peso;
+          boxDim.volItems += maxVol.comprimento * maxVol.altura * maxVol.largura;
           this.discount(organizedItems, maxVol);
             
         }
@@ -83,8 +93,12 @@ class Caixa {
 
       }
     }
-    
+     
     boxDim.altura += lastItem.altura;
+    boxDim.peso += lastItem.peso;
+    boxDim.volItems += lastItem.comprimento * lastItem.altura * lastItem.largura;
+    boxDim.vol = boxDim.altura * boxDim.comprimento * boxDim.largura;
+    boxDim.volVazio = boxDim.vol - boxDim.volItems;
     return boxDim;
 
   }
@@ -118,7 +132,8 @@ class Caixa {
         altura: menor,
         largura: inter,
         comprimento: maior,
-        quantidade: item.quantidade
+        quantidade: item.quantidade,
+        peso: item.peso
       };
       outPutItems.push(newItem);
 
